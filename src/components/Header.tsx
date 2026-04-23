@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/Logo";
+import { WHATSAPP_URL } from "@/components/WhatsAppFloatingButton";
 
 export function Header() {
   const { user, isAdmin, signOut } = useAuth();
@@ -40,6 +41,15 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-primary-glow px-4 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-105"
+          >
+            <MessageCircle className="h-4 w-4" />
+            Asesoría gratis
+          </a>
           {user ? (
             <>
               {isAdmin && (
@@ -53,7 +63,7 @@ export function Header() {
             </>
           ) : (
             <Link to="/auth">
-              <Button size="sm" className="rounded-full bg-primary hover:bg-primary/90">
+              <Button variant="ghost" size="sm">
                 Ingresar
               </Button>
             </Link>
@@ -83,6 +93,16 @@ export function Header() {
               </Link>
             ))}
             <div className="mt-2 border-t border-border/50 pt-2">
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="mb-2 flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-primary to-primary-glow px-3 py-2.5 text-sm font-semibold text-primary-foreground"
+              >
+                <MessageCircle className="h-4 w-4" />
+                Asesoría gratis
+              </a>
               {user ? (
                 <>
                   {isAdmin && (
@@ -108,7 +128,7 @@ export function Header() {
                 <Link
                   to="/auth"
                   onClick={() => setOpen(false)}
-                  className="block rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground"
+                  className="block rounded-md px-3 py-2 text-sm font-medium hover:bg-secondary"
                 >
                   Ingresar
                 </Link>
