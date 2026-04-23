@@ -90,6 +90,7 @@ function AdminArticles() {
                 <th className="px-4 py-3">Título</th>
                 <th className="px-4 py-3">Estado</th>
                 <th className="px-4 py-3 hidden md:table-cell">Categoría</th>
+                <th className="px-4 py-3 text-center">Vistas</th>
                 <th className="px-4 py-3 text-right">Acciones</th>
               </tr>
             </thead>
@@ -108,6 +109,11 @@ function AdminArticles() {
                     </span>
                   </td>
                   <td className="px-4 py-3 hidden md:table-cell text-sm text-muted-foreground">{r.category ?? "—"}</td>
+                  <td className="px-4 py-3 text-center">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+                      <BarChart3 className="h-3 w-3" /> {r.view_count.toLocaleString("es")}
+                    </span>
+                  </td>
                   <td className="px-4 py-3 text-right">
                     <div className="inline-flex gap-1">
                       <Button size="icon" variant="ghost" onClick={() => toggleStatus(r)} title={r.status === "published" ? "Despublicar" : "Publicar"}>
