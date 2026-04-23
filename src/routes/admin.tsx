@@ -61,9 +61,9 @@ function AdminLayout() {
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-          <Link to="/" className="flex items-center gap-2 font-bold text-lg">
-            <Logo className="h-8 w-8" />
-            <span>sudo<span className="text-primary">.labs</span> <span className="text-xs font-normal text-muted-foreground">/ admin</span></span>
+          <Link to="/" aria-label="Sudo Labs — Inicio" className="flex items-center gap-2 text-lg">
+            <Logo size={32} />
+            <span className="text-xs font-normal text-muted-foreground">/ admin</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link to="/"><Button variant="ghost" size="sm">Ver sitio</Button></Link>
