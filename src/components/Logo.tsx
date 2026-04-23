@@ -1,42 +1,69 @@
 interface Props {
   className?: string;
+  size?: number;
 }
 
-export function Logo({ className = "h-8 w-8" }: Props) {
+/**
+ * Logo sudo.labs — "S." dentro de un anillo violeta segmentado que rota lentamente.
+ * Replica visualmente el logo del sitio sodulabs.lovable.app.
+ */
+export function Logo({ className = "", size = 36 }: Props) {
   return (
-    <svg
-      viewBox="0 0 40 40"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
+    <span
+      className={`relative inline-flex items-center justify-center ${className}`}
+      style={{ width: size, height: size }}
       aria-hidden="true"
     >
-      <defs>
-        <linearGradient id="logo-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="oklch(var(--primary-glow-l, 0.75) var(--primary-c, 0.22) var(--primary-h, 295))" />
-          <stop offset="100%" stopColor="hsl(var(--primary))" />
-        </linearGradient>
-      </defs>
-      <circle
-        cx="20"
-        cy="20"
-        r="18"
-        stroke="url(#logo-grad)"
-        strokeWidth="1.75"
-        fill="none"
+      {/* Glow violeta detrás */}
+      <span
+        className="absolute inset-1 rounded-full blur-md opacity-70"
+        style={{ background: "var(--primary)" }}
       />
-      <text
-        x="50%"
-        y="54%"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fontFamily="Inter, system-ui, sans-serif"
-        fontWeight="700"
-        fontSize="20"
-        fill="url(#logo-grad)"
+
+      <svg
+        viewBox="0 0 40 40"
+        width={size}
+        height={size}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="relative"
       >
-        S
-      </text>
-    </svg>
+        <defs>
+          <linearGradient id="logo-ring-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="var(--primary-glow)" stopOpacity="1" />
+            <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.5" />
+          </linearGradient>
+        </defs>
+
+        {/* Anillo segmentado giratorio */}
+        <g className="animate-logo-spin">
+          <circle
+            cx="20"
+            cy="20"
+            r="18"
+            stroke="url(#logo-ring-grad)"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeDasharray="80 33"
+          />
+        </g>
+
+        {/* "S" centrada */}
+        <text
+          x="50%"
+          y="55%"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fontFamily="Inter, system-ui, sans-serif"
+          fontWeight="700"
+          fontSize="19"
+          fill="var(--foreground)"
+        >
+          S
+        </text>
+        {/* Punto violeta junto a la S */}
+        <circle cx="28" cy="26.5" r="1.5" fill="var(--primary)" />
+      </svg>
+    </span>
   );
 }
