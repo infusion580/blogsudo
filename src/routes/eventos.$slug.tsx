@@ -31,18 +31,70 @@ async function loadEvent(slug: string): Promise<EventFull> {
   return data as EventFull;
 }
 
+const SITE_URL = "https://blogsudo.lovable.app";
+
 export const Route = createFileRoute("/eventos/$slug")({
   loader: ({ params }) => loadEvent(params.slug),
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const e = loaderData as EventFull | undefined;
+    const url = `${SITE_URL}/eventos/${params?.slug ?? ""}`;
+    const title = e ? `${e.title} — sudo.labs` : "Evento — sudo.labs";
+    const desc = e?.description ?? "Evento de sudo.labs.";
+    const image = e?.cover_image_url ?? undefined;
+    const startDate = e?.event_date && e?.event_time
+      ? `${e.event_date}T${e.event_time}`
+      : e?.event_date;
     return {
       meta: [
-        { title: e ? `${e.title} — blog.lab` : "Evento" },
-        { name: "description", content: e?.description ?? "Evento del blog" },
+        { title },
+        { name: "description", content: desc },
+        { property: "og:type", content: "event" },
+        { property: "og:url", content: url },
         { property: "og:title", content: e?.title ?? "Evento" },
-        { property: "og:description", content: e?.description ?? "" },
-        ...(e?.cover_image_url ? [{ property: "og:image", content: e.cover_image_url }] : []),
+        { property: "og:description", content: desc },
+        ...(image ? [{ property: "og:image", content: image }] : []),
+        { name: "twitter:card", content: image ? "summary_large_image" : "summary" },
+        { name: "twitter:title", content: e?.title ?? "Evento" },
+        { name: "twitter:description", content: desc },
+        ...(image ? [{ name: "twitter:image", content: image }] : []),
       ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: e
+        ? [
+            {
+              type: "application/ld+json",
+              children: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Event",
+                name: e.title,
+                description: e.description ?? undefined,
+                image: image ? [image] : undefined,
+                startDate,
+                eventStatus: "https://schema.org/EventScheduled",
+                eventAttendanceMode: e.location?.toLowerCase().includes("online") || e.location?.toLowerCase().includes("virtual")
+                  ? "https://schema.org/OnlineEventAttendanceMode"
+                  : "https://schema.org/OfflineEventAttendanceMode",
+                location: e.location
+                  ? { "@type": "Place", name: e.location, address: e.location }
+                  : undefined,
+                url,
+                organizer: { "@type": "Organization", name: "sudo.labs", url: SITE_URL },
+              }),
+            },
+            {
+              type: "application/ld+json",
+              children: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Inicio", item: SITE_URL },
+                  { "@type": "ListItem", position: 2, name: "Eventos", item: `${SITE_URL}/eventos` },
+                  { "@type": "ListItem", position: 3, name: e.title, item: url },
+                ],
+              }),
+            },
+          ]
+        : [],
     };
   },
   notFoundComponent: () => (

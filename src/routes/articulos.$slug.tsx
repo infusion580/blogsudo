@@ -32,18 +32,70 @@ async function loadArticle(slug: string): Promise<ArticleFull> {
   return data as ArticleFull;
 }
 
+const SITE_URL = "https://blogsudo.lovable.app";
+
 export const Route = createFileRoute("/articulos/$slug")({
   loader: ({ params }) => loadArticle(params.slug),
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const a = loaderData as ArticleFull | undefined;
+    const url = `${SITE_URL}/articulos/${params?.slug ?? ""}`;
+    const title = a ? `${a.title} — sudo.labs` : "Artículo — sudo.labs";
+    const desc = a?.excerpt ?? "Artículo del blog de sudo.labs sobre tecnología, desarrollo y diseño.";
+    const image = a?.cover_image_url ?? undefined;
     return {
       meta: [
-        { title: a ? `${a.title} — blog.lab` : "Artículo — blog.lab" },
-        { name: "description", content: a?.excerpt ?? "Artículo del blog" },
+        { title },
+        { name: "description", content: desc },
+        ...(a?.tags?.length ? [{ name: "keywords", content: a.tags.join(", ") }] : []),
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: url },
         { property: "og:title", content: a?.title ?? "Artículo" },
-        { property: "og:description", content: a?.excerpt ?? "" },
-        ...(a?.cover_image_url ? [{ property: "og:image", content: a.cover_image_url }] : []),
+        { property: "og:description", content: desc },
+        ...(image ? [{ property: "og:image", content: image }] : []),
+        ...(a?.published_at ? [{ property: "article:published_time", content: a.published_at }] : []),
+        ...(a?.category ? [{ property: "article:section", content: a.category }] : []),
+        { name: "twitter:card", content: image ? "summary_large_image" : "summary" },
+        { name: "twitter:title", content: a?.title ?? "Artículo" },
+        { name: "twitter:description", content: desc },
+        ...(image ? [{ name: "twitter:image", content: image }] : []),
       ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: a
+        ? [
+            {
+              type: "application/ld+json",
+              children: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                headline: a.title,
+                description: a.excerpt ?? undefined,
+                image: image ? [image] : undefined,
+                datePublished: a.published_at ?? undefined,
+                articleSection: a.category ?? undefined,
+                keywords: a.tags?.join(", ") ?? undefined,
+                mainEntityOfPage: { "@type": "WebPage", "@id": url },
+                author: { "@type": "Organization", name: "sudo.labs" },
+                publisher: {
+                  "@type": "Organization",
+                  name: "sudo.labs",
+                  logo: { "@type": "ImageObject", url: `${SITE_URL}/favicon-512.png` },
+                },
+              }),
+            },
+            {
+              type: "application/ld+json",
+              children: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Inicio", item: SITE_URL },
+                  { "@type": "ListItem", position: 2, name: "Artículos", item: `${SITE_URL}/articulos` },
+                  { "@type": "ListItem", position: 3, name: a.title, item: url },
+                ],
+              }),
+            },
+          ]
+        : [],
     };
   },
   notFoundComponent: () => (
