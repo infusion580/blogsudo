@@ -4,65 +4,63 @@ interface Props {
 }
 
 /**
- * Logo sudo.labs — "S." dentro de un anillo violeta segmentado que rota lentamente.
- * Replica visualmente el logo del sitio sodulabs.lovable.app.
+ * Logo sudo.labs — réplica del original:
+ * - Anillo circular violeta fino con glow suave.
+ * - "S" italica violeta centrada.
+ * - Pequeño punto violeta abajo a la derecha de la S.
+ * - El anillo gira lentamente de forma continua (animate-logo-ring).
  */
-export function Logo({ className = "", size = 36 }: Props) {
+export function Logo({ className = "", size = 32 }: Props) {
   return (
     <span
       className={`relative inline-flex items-center justify-center ${className}`}
       style={{ width: size, height: size }}
       aria-hidden="true"
     >
-      {/* Glow violeta detrás */}
+      {/* Glow violeta detrás del círculo */}
       <span
-        className="absolute inset-1 rounded-full blur-md opacity-70"
+        className="absolute inset-0 rounded-full blur-md opacity-50"
         style={{ background: "var(--primary)" }}
       />
 
       <svg
-        viewBox="0 0 40 40"
+        viewBox="0 0 32 32"
         width={size}
         height={size}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="relative"
       >
-        <defs>
-          <linearGradient id="logo-ring-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="var(--primary-glow)" stopOpacity="1" />
-            <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.5" />
-          </linearGradient>
-        </defs>
-
-        {/* Anillo segmentado giratorio */}
-        <g className="animate-logo-spin">
+        {/* Anillo giratorio */}
+        <g className="animate-logo-ring">
           <circle
-            cx="20"
-            cy="20"
-            r="18"
-            stroke="url(#logo-ring-grad)"
-            strokeWidth="1.5"
+            cx="16"
+            cy="16"
+            r="14.5"
+            stroke="var(--primary)"
+            strokeWidth="1.25"
             strokeLinecap="round"
-            strokeDasharray="80 33"
+            opacity="0.95"
           />
         </g>
 
-        {/* "S" centrada */}
+        {/* "S" italica centrada */}
         <text
-          x="50%"
-          y="55%"
+          x="16"
+          y="17.5"
           textAnchor="middle"
           dominantBaseline="middle"
           fontFamily="Inter, system-ui, sans-serif"
-          fontWeight="700"
-          fontSize="19"
-          fill="var(--foreground)"
+          fontStyle="italic"
+          fontWeight="600"
+          fontSize="15"
+          fill="var(--primary)"
+          letterSpacing="-0.5"
         >
           S
         </text>
-        {/* Punto violeta junto a la S */}
-        <circle cx="28" cy="26.5" r="1.5" fill="var(--primary)" />
+        {/* Punto violeta a la derecha de la S */}
+        <circle cx="22" cy="22" r="1.1" fill="var(--primary)" />
       </svg>
     </span>
   );
