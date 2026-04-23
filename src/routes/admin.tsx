@@ -4,6 +4,7 @@ import { FileText, Calendar, LogOut, Home } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/Logo";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -61,8 +62,8 @@ function AdminLayout() {
       <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
           <Link to="/" className="flex items-center gap-2 font-bold text-lg">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary-glow text-primary-foreground">B</span>
-            <span>blog<span className="text-primary">.lab</span> <span className="text-xs font-normal text-muted-foreground">/ admin</span></span>
+            <Logo className="h-8 w-8" />
+            <span>sudo<span className="text-primary">.labs</span> <span className="text-xs font-normal text-muted-foreground">/ admin</span></span>
           </Link>
           <div className="flex items-center gap-3">
             <Link to="/"><Button variant="ghost" size="sm">Ver sitio</Button></Link>
