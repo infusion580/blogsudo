@@ -6,14 +6,22 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 
+const SITE_URL = "https://blogsudo.lovable.app";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "blog.lab — Artículos y eventos sobre tecnología" },
-      { name: "description", content: "Inspiración, ideas y eventos sobre desarrollo, diseño y producto." },
-      { property: "og:title", content: "blog.lab" },
-      { property: "og:description", content: "Inspiración, ideas y eventos sobre desarrollo, diseño y producto." },
+      { title: "sudo.labs — Blog de tecnología, desarrollo y diseño" },
+      { name: "description", content: "Artículos y eventos sobre desarrollo de software, diseño de producto y tecnología. Aprende, inspírate y conecta con la comunidad sudo.labs." },
+      { name: "keywords", content: "blog tecnología, desarrollo software, diseño producto, eventos tech, programación, sudo.labs" },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:title", content: "sudo.labs — Blog de tecnología, desarrollo y diseño" },
+      { property: "og:description", content: "Artículos y eventos sobre desarrollo de software, diseño de producto y tecnología." },
+      { name: "twitter:title", content: "sudo.labs — Blog de tecnología, desarrollo y diseño" },
+      { name: "twitter:description", content: "Artículos y eventos sobre desarrollo de software, diseño de producto y tecnología." },
     ],
+    links: [{ rel: "canonical", href: SITE_URL }],
   }),
   component: Index,
 });

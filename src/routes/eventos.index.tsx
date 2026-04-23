@@ -5,14 +5,22 @@ import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
+const SITE_URL = "https://blogsudo.lovable.app";
+
 export const Route = createFileRoute("/eventos/")({
   head: () => ({
     meta: [
-      { title: "Eventos — blog.lab" },
-      { name: "description", content: "Todos los eventos publicados: charlas, talleres y meetups." },
-      { property: "og:title", content: "Eventos — blog.lab" },
-      { property: "og:description", content: "Todos los eventos publicados: charlas, talleres y meetups." },
+      { title: "Eventos — sudo.labs" },
+      { name: "description", content: "Charlas, talleres y meetups de sudo.labs. Encuentra los próximos eventos sobre desarrollo, diseño y tecnología." },
+      { name: "keywords", content: "eventos tecnología, meetups desarrollo, talleres programación, charlas tech" },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/eventos` },
+      { property: "og:title", content: "Eventos — sudo.labs" },
+      { property: "og:description", content: "Charlas, talleres y meetups sobre desarrollo, diseño y tecnología." },
+      { name: "twitter:title", content: "Eventos — sudo.labs" },
+      { name: "twitter:description", content: "Charlas, talleres y meetups sobre desarrollo, diseño y tecnología." },
     ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/eventos` }],
   }),
   component: EventsIndex,
 });
