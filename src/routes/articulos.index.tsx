@@ -4,14 +4,22 @@ import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
+const SITE_URL = "https://blogsudo.lovable.app";
+
 export const Route = createFileRoute("/articulos/")({
   head: () => ({
     meta: [
-      { title: "Artículos — blog.lab" },
-      { name: "description", content: "Todos los artículos publicados sobre desarrollo, diseño y producto." },
-      { property: "og:title", content: "Artículos — blog.lab" },
+      { title: "Artículos — sudo.labs" },
+      { name: "description", content: "Todos los artículos de sudo.labs sobre desarrollo de software, diseño de producto y tecnología. Lectura técnica en español." },
+      { name: "keywords", content: "artículos tecnología, blog desarrollo, tutoriales programación, diseño producto" },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/articulos` },
+      { property: "og:title", content: "Artículos — sudo.labs" },
       { property: "og:description", content: "Todos los artículos publicados sobre desarrollo, diseño y producto." },
+      { name: "twitter:title", content: "Artículos — sudo.labs" },
+      { name: "twitter:description", content: "Todos los artículos publicados sobre desarrollo, diseño y producto." },
     ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/articulos` }],
   }),
   component: ArticlesIndex,
 });
