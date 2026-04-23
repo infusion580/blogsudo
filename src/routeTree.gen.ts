@@ -10,33 +10,84 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EventosIndexRouteImport } from './routes/eventos.index'
+import { Route as ArticulosIndexRouteImport } from './routes/articulos.index'
+import { Route as EventosSlugRouteImport } from './routes/eventos.$slug'
+import { Route as ArticulosSlugRouteImport } from './routes/articulos.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventosIndexRoute = EventosIndexRouteImport.update({
+  id: '/eventos/',
+  path: '/eventos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArticulosIndexRoute = ArticulosIndexRouteImport.update({
+  id: '/articulos/',
+  path: '/articulos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventosSlugRoute = EventosSlugRouteImport.update({
+  id: '/eventos/$slug',
+  path: '/eventos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArticulosSlugRoute = ArticulosSlugRouteImport.update({
+  id: '/articulos/$slug',
+  path: '/articulos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/articulos/$slug': typeof ArticulosSlugRoute
+  '/eventos/$slug': typeof EventosSlugRoute
+  '/articulos/': typeof ArticulosIndexRoute
+  '/eventos/': typeof EventosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/articulos/$slug': typeof ArticulosSlugRoute
+  '/eventos/$slug': typeof EventosSlugRoute
+  '/articulos': typeof ArticulosIndexRoute
+  '/eventos': typeof EventosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/articulos/$slug': typeof ArticulosSlugRoute
+  '/eventos/$slug': typeof EventosSlugRoute
+  '/articulos/': typeof ArticulosIndexRoute
+  '/eventos/': typeof EventosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/articulos/$slug'
+    | '/eventos/$slug'
+    | '/articulos/'
+    | '/eventos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/articulos/$slug' | '/eventos/$slug' | '/articulos' | '/eventos'
+  id:
+    | '__root__'
+    | '/'
+    | '/articulos/$slug'
+    | '/eventos/$slug'
+    | '/articulos/'
+    | '/eventos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ArticulosSlugRoute: typeof ArticulosSlugRoute
+  EventosSlugRoute: typeof EventosSlugRoute
+  ArticulosIndexRoute: typeof ArticulosIndexRoute
+  EventosIndexRoute: typeof EventosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +99,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/eventos/': {
+      id: '/eventos/'
+      path: '/eventos'
+      fullPath: '/eventos/'
+      preLoaderRoute: typeof EventosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/articulos/': {
+      id: '/articulos/'
+      path: '/articulos'
+      fullPath: '/articulos/'
+      preLoaderRoute: typeof ArticulosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eventos/$slug': {
+      id: '/eventos/$slug'
+      path: '/eventos/$slug'
+      fullPath: '/eventos/$slug'
+      preLoaderRoute: typeof EventosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/articulos/$slug': {
+      id: '/articulos/$slug'
+      path: '/articulos/$slug'
+      fullPath: '/articulos/$slug'
+      preLoaderRoute: typeof ArticulosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ArticulosSlugRoute: ArticulosSlugRoute,
+  EventosSlugRoute: EventosSlugRoute,
+  ArticulosIndexRoute: ArticulosIndexRoute,
+  EventosIndexRoute: EventosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
