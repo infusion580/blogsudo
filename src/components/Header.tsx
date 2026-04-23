@@ -19,11 +19,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/50 bg-background/70 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <Link to="/" className="flex items-center gap-2 font-bold text-lg">
-          <Logo className="h-8 w-8" />
-          <span>
-            sudo<span className="text-primary">.labs</span>
-          </span>
+        <Link to="/" aria-label="Sudo Labs — Inicio" className="text-lg md:text-xl">
+          <Logo size={32} />
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
