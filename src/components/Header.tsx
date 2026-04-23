@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/Logo";
 
 export function Header() {
   const { user, isAdmin, signOut } = useAuth();
@@ -18,11 +19,9 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border/50 bg-background/70 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         <Link to="/" className="flex items-center gap-2 font-bold text-lg">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary-glow text-primary-foreground glow-primary">
-            B
-          </span>
+          <Logo className="h-8 w-8" />
           <span>
-            blog<span className="text-primary">.lab</span>
+            sudo<span className="text-primary">.labs</span>
           </span>
         </Link>
 
