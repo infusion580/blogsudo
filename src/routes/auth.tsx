@@ -29,10 +29,9 @@ const nameSchema = z.string().trim().min(1, "Requerido").max(80);
 function AuthPage() {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"login" | "signup" | "forgot">("login");
+  const [mode, setMode] = useState<"login" | "forgot">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   if (!authLoading && user) {
