@@ -28,7 +28,7 @@ function AdminArticles() {
     setLoading(true);
     supabase
       .from("articles")
-      .select("id,slug,title,status,category,published_at,updated_at")
+      .select("id,slug,title,status,category,published_at,updated_at,view_count")
       .order("updated_at", { ascending: false })
       .then(({ data }) => {
         setRows(data ?? []);
