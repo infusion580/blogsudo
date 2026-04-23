@@ -15,7 +15,7 @@ export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
       { title: "Acceso admin — blog.lab" },
-      { name: "description", content: "Iniciá sesión o creá una cuenta de administrador." },
+      { name: "description", content: "Iniciá sesión como administrador." },
       { name: "robots", content: "noindex,nofollow" },
     ],
   }),
@@ -24,7 +24,6 @@ export const Route = createFileRoute("/auth")({
 
 const emailSchema = z.string().trim().email({ message: "Email inválido" }).max(255);
 const passwordSchema = z.string().min(8, "Mínimo 8 caracteres").max(128);
-const nameSchema = z.string().trim().min(1, "Requerido").max(80);
 
 function AuthPage() {
   const { user, loading: authLoading } = useAuth();
@@ -59,33 +58,6 @@ function AuthPage() {
     navigate({ to: "/admin" });
   };
 
-  const handleSignup = async (e: FormEvent) => {
-    e.preventDefault();
-    const emailP = emailSchema.safeParse(email);
-    const passP = passwordSchema.safeParse(password);
-    const nameP = nameSchema.safeParse(name);
-    if (!nameP.success) return toast.error(nameP.error.issues[0].message);
-    if (!emailP.success) return toast.error(emailP.error.issues[0].message);
-    if (!passP.success) return toast.error(passP.error.issues[0].message);
-
-    setSubmitting(true);
-    const { error } = await supabase.auth.signUp({
-      email: emailP.data,
-      password: passP.data,
-      options: {
-        emailRedirectTo: `${window.location.origin}/admin`,
-        data: { display_name: nameP.data },
-      },
-    });
-    setSubmitting(false);
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-    toast.success("Cuenta creada. ¡Bienvenido!");
-    navigate({ to: "/admin" });
-  };
-
   const handleForgot = async (e: FormEvent) => {
     e.preventDefault();
     const emailP = emailSchema.safeParse(email);
@@ -106,7 +78,7 @@ function AuthPage() {
       }
       toast.success("Si el email existe, te enviamos una nueva contraseña.");
       setMode("login");
-    } catch (err) {
+    } catch {
       setSubmitting(false);
       toast.error("Error de red");
     }
@@ -123,12 +95,10 @@ function AuthPage() {
           <div className="mb-8 text-center">
             <h1 className="text-3xl font-black">
               {mode === "login" && <>Iniciar <span className="italic font-light text-gradient">sesión</span></>}
-              {mode === "signup" && <>Crear <span className="italic font-light text-gradient">cuenta</span></>}
               {mode === "forgot" && <>Recuperar <span className="italic font-light text-gradient">acceso</span></>}
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
               {mode === "login" && "Accedé al panel de administración"}
-              {mode === "signup" && "Registrate como administrador"}
               {mode === "forgot" && "Te enviamos una nueva contraseña por email"}
             </p>
           </div>
@@ -146,37 +116,9 @@ function AuthPage() {
               <Button type="submit" disabled={submitting} className="w-full rounded-full bg-primary hover:bg-primary/90 glow-primary">
                 {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Ingresar"}
               </Button>
-              <div className="flex justify-between pt-2 text-xs">
+              <div className="pt-2 text-center text-xs">
                 <button type="button" onClick={() => setMode("forgot")} className="text-muted-foreground hover:text-foreground">
                   ¿Olvidaste tu contraseña?
-                </button>
-                <button type="button" onClick={() => setMode("signup")} className="text-primary hover:underline">
-                  Crear cuenta
-                </button>
-              </div>
-            </form>
-          )}
-
-          {mode === "signup" && (
-            <form onSubmit={handleSignup} className="space-y-4">
-              <div>
-                <Label htmlFor="name">Nombre</Label>
-                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
-              </div>
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-              </div>
-              <div>
-                <Label htmlFor="password">Contraseña</Label>
-                <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Mínimo 8 caracteres" required />
-              </div>
-              <Button type="submit" disabled={submitting} className="w-full rounded-full bg-primary hover:bg-primary/90 glow-primary">
-                {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Crear cuenta"}
-              </Button>
-              <div className="pt-2 text-center text-xs">
-                <button type="button" onClick={() => setMode("login")} className="text-primary hover:underline">
-                  Ya tengo cuenta
                 </button>
               </div>
             </form>
