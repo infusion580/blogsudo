@@ -27,25 +27,31 @@ function NotFoundComponent() {
   );
 }
 
+const SITE_URL = "https://blogsudo.lovable.app";
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "blog.lab — Artículos y eventos sobre tecnología" },
-      { name: "description", content: "Blog de artículos y eventos sobre desarrollo, diseño y tecnología." },
-      { name: "author", content: "blog.lab" },
-      { property: "og:title", content: "blog.lab — Artículos y eventos sobre tecnología" },
-      { property: "og:description", content: "Blog de artículos y eventos sobre desarrollo, diseño y tecnología." },
+      { title: "sudo.labs — Artículos y eventos sobre tecnología" },
+      { name: "description", content: "Blog de sudo.labs: artículos y eventos sobre desarrollo, diseño, producto y tecnología en español." },
+      { name: "author", content: "sudo.labs" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
+      { name: "theme-color", content: "#9d4edd" },
+      { property: "og:site_name", content: "sudo.labs" },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "blog.lab — Artículos y eventos sobre tecnología" },
-      { name: "twitter:description", content: "Blog de artículos y eventos sobre desarrollo, diseño y tecnología." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1e47fd4e-d31f-4368-ba48-f2b78b951e73/id-preview-809c4d22--2eaa45e2-098c-4606-b698-6803df493d9f.lovable.app-1776979545567.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1e47fd4e-d31f-4368-ba48-f2b78b951e73/id-preview-809c4d22--2eaa45e2-098c-4606-b698-6803df493d9f.lovable.app-1776979545567.png" },
+      { property: "og:locale", content: "es_ES" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:title", content: "sudo.labs — Artículos y eventos sobre tecnología" },
+      { property: "og:description", content: "Blog de sudo.labs: artículos y eventos sobre desarrollo, diseño, producto y tecnología en español." },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "sudo.labs — Artículos y eventos sobre tecnología" },
+      { name: "twitter:description", content: "Blog de sudo.labs: artículos y eventos sobre desarrollo, diseño, producto y tecnología en español." },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: SITE_URL },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
       { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
@@ -57,6 +63,29 @@ export const Route = createRootRoute({
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "sudo.labs",
+          url: SITE_URL,
+          logo: `${SITE_URL}/favicon-512.png`,
+          sameAs: ["https://sodulabs.lovable.app"],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "sudo.labs",
+          url: SITE_URL,
+          inLanguage: "es",
+        }),
       },
     ],
   }),
