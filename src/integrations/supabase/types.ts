@@ -14,6 +14,35 @@ export type Database = {
   }
   public: {
     Tables: {
+      article_likes: {
+        Row: {
+          article_id: string
+          created_at: string
+          id: string
+          session_id: string
+        }
+        Insert: {
+          article_id: string
+          created_at?: string
+          id?: string
+          session_id: string
+        }
+        Update: {
+          article_id?: string
+          created_at?: string
+          id?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "article_likes_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       articles: {
         Row: {
           author_id: string | null
@@ -23,6 +52,7 @@ export type Database = {
           created_at: string
           excerpt: string | null
           id: string
+          like_count: number
           published_at: string | null
           slug: string
           status: string
@@ -39,6 +69,7 @@ export type Database = {
           created_at?: string
           excerpt?: string | null
           id?: string
+          like_count?: number
           published_at?: string | null
           slug: string
           status?: string
@@ -55,6 +86,7 @@ export type Database = {
           created_at?: string
           excerpt?: string | null
           id?: string
+          like_count?: number
           published_at?: string | null
           slug?: string
           status?: string
@@ -180,6 +212,14 @@ export type Database = {
         Returns: boolean
       }
       increment_article_views: { Args: { _slug: string }; Returns: undefined }
+      like_article: {
+        Args: { _article_id: string; _session_id: string }
+        Returns: undefined
+      }
+      unlike_article: {
+        Args: { _article_id: string; _session_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "user"
