@@ -100,6 +100,15 @@ export function Header() {
                 {l.label}
               </Link>
             ))}
+            <a
+              href="https://sodulabs.lovable.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-secondary hover:text-foreground"
+            >
+              Volver al sitio <ExternalLink className="h-3.5 w-3.5" />
+            </a>
             <div className="mt-2 border-t border-border/50 pt-2">
               <a
                 href={WHATSAPP_URL}

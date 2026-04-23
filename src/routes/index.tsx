@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, Calendar, Sparkles } from "lucide-react";
+import { ArrowRight, Calendar, Sparkles, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -93,6 +93,11 @@ function Index() {
                 Ver eventos
               </Button>
             </Link>
+            <a href="https://sodulabs.lovable.app" target="_blank" rel="noopener noreferrer">
+              <Button size="lg" variant="ghost" className="rounded-full px-7 text-muted-foreground hover:text-foreground">
+                Regresar al sitio <ExternalLink className="ml-1 h-4 w-4" />
+              </Button>
+            </a>
           </div>
         </div>
       </section>
