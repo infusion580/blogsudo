@@ -1,9 +1,10 @@
 import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/button";
 
 interface ArticleFull {
   id: string;
@@ -127,6 +128,16 @@ function ArticlePage() {
               ))}
             </div>
           )}
+
+          <div className="mt-12 flex flex-col items-center gap-4 rounded-2xl border border-primary/30 bg-primary/5 p-8 text-center">
+            <p className="text-lg font-semibold">¿Te interesó este artículo?</p>
+            <p className="text-sm text-muted-foreground">Conoce más sobre nuestros servicios y cómo podemos ayudarte.</p>
+            <a href="https://sodulabs.lovable.app" target="_blank" rel="noopener noreferrer">
+              <Button size="lg" className="rounded-full bg-primary px-7 hover:bg-primary/90 glow-primary">
+                Asesórate <ExternalLink className="ml-1 h-4 w-4" />
+              </Button>
+            </a>
+          </div>
         </article>
       </main>
       <Footer />
