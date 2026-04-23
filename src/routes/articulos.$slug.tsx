@@ -90,6 +90,11 @@ function ArticlePage() {
     setHtml(paragraphs);
   }, [article.content]);
 
+  useEffect(() => {
+    // Track view (once per mount)
+    supabase.rpc("increment_article_views", { _slug: article.slug });
+  }, [article.slug]);
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />

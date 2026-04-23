@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { FileText, Calendar, Plus } from "lucide-react";
+import { FileText, Calendar, Plus, Eye } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 
@@ -9,16 +9,23 @@ export const Route = createFileRoute("/admin/")({
 });
 
 function AdminHome() {
-  const [stats, setStats] = useState({ articles: 0, events: 0, drafts: 0 });
+  const [stats, setStats] = useState({ articles: 0, events: 0, drafts: 0, views: 0 });
 
   useEffect(() => {
     Promise.all([
       supabase.from("articles").select("id", { count: "exact", head: true }),
       supabase.from("events").select("id", { count: "exact", head: true }),
       supabase.from("articles").select("id", { count: "exact", head: true }).eq("status", "draft"),
-    ]).then(([a, e, d]) =>
-      setStats({ articles: a.count ?? 0, events: e.count ?? 0, drafts: d.count ?? 0 }),
-    );
+      supabase.from("articles").select("view_count"),
+    ]).then(([a, e, d, v]) => {
+      const totalViews = (v.data ?? []).reduce((sum, row) => sum + (row.view_count ?? 0), 0);
+      setStats({
+        articles: a.count ?? 0,
+        events: e.count ?? 0,
+        drafts: d.count ?? 0,
+        views: totalViews,
+      });
+    });
   }, []);
 
   return (
@@ -28,10 +35,11 @@ function AdminHome() {
       </h1>
       <p className="mt-2 text-muted-foreground">Gestioná el contenido del blog.</p>
 
-      <div className="mt-10 grid gap-4 sm:grid-cols-3">
+      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard icon={FileText} label="Artículos" value={stats.articles} />
         <StatCard icon={Calendar} label="Eventos" value={stats.events} />
         <StatCard icon={FileText} label="Borradores" value={stats.drafts} />
+        <StatCard icon={Eye} label="Vistas totales" value={stats.views} />
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">

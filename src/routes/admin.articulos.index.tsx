@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Plus, Pencil, Trash2, Eye, EyeOff } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff, BarChart3 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ interface Row {
   category: string | null;
   published_at: string | null;
   updated_at: string;
+  view_count: number;
 }
 
 function AdminArticles() {
@@ -27,7 +28,7 @@ function AdminArticles() {
     setLoading(true);
     supabase
       .from("articles")
-      .select("id,slug,title,status,category,published_at,updated_at")
+      .select("id,slug,title,status,category,published_at,updated_at,view_count")
       .order("updated_at", { ascending: false })
       .then(({ data }) => {
         setRows(data ?? []);
@@ -89,6 +90,7 @@ function AdminArticles() {
                 <th className="px-4 py-3">Título</th>
                 <th className="px-4 py-3">Estado</th>
                 <th className="px-4 py-3 hidden md:table-cell">Categoría</th>
+                <th className="px-4 py-3 text-center">Vistas</th>
                 <th className="px-4 py-3 text-right">Acciones</th>
               </tr>
             </thead>
@@ -107,6 +109,11 @@ function AdminArticles() {
                     </span>
                   </td>
                   <td className="px-4 py-3 hidden md:table-cell text-sm text-muted-foreground">{r.category ?? "—"}</td>
+                  <td className="px-4 py-3 text-center">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+                      <BarChart3 className="h-3 w-3" /> {r.view_count.toLocaleString("es")}
+                    </span>
+                  </td>
                   <td className="px-4 py-3 text-right">
                     <div className="inline-flex gap-1">
                       <Button size="icon" variant="ghost" onClick={() => toggleStatus(r)} title={r.status === "published" ? "Despublicar" : "Publicar"}>
