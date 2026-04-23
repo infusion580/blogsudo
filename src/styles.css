@@ -152,6 +152,10 @@
     transform-origin: center;
     transform-box: fill-box;
   }
+  .animate-logo-ring {
+    animation: logo-spin 8s linear infinite;
+    transform-origin: 16px 16px;
+  }
 }
 
 @keyframes logo-spin {

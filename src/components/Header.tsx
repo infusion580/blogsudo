@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, X, MessageCircle } from "lucide-react";
+import { Menu, X, MessageCircle, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
@@ -38,6 +38,14 @@ export function Header() {
               {l.label}
             </Link>
           ))}
+          <a
+            href="https://sodulabs.lovable.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Volver al sitio <ExternalLink className="h-3.5 w-3.5" />
+          </a>
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
@@ -92,6 +100,15 @@ export function Header() {
                 {l.label}
               </Link>
             ))}
+            <a
+              href="https://sodulabs.lovable.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-secondary hover:text-foreground"
+            >
+              Volver al sitio <ExternalLink className="h-3.5 w-3.5" />
+            </a>
             <div className="mt-2 border-t border-border/50 pt-2">
               <a
                 href={WHATSAPP_URL}
