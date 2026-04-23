@@ -139,7 +139,6 @@ export function ArticleEditor({ id }: Props) {
               <option value="published">Publicado</option>
             </select>
           </div>
-          <div>
           <ImageUpload
             value={form.cover_image_url}
             onChange={(url) => update("cover_image_url", url)}
