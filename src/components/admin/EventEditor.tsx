@@ -154,13 +154,11 @@ export function EventEditor({ id }: { id?: string }) {
             <Label>Ubicación</Label>
             <Input value={form.location} onChange={(e) => update("location", e.target.value)} placeholder="Online o ciudad" />
           </div>
-          <div>
-            <Label>Imagen (URL)</Label>
-            <Input value={form.cover_image_url} onChange={(e) => update("cover_image_url", e.target.value)} placeholder="https://..." />
-            {form.cover_image_url && (
-              <img src={form.cover_image_url} alt="" className="mt-2 aspect-video w-full rounded-lg object-cover" />
-            )}
-          </div>
+          <ImageUpload
+            value={form.cover_image_url}
+            onChange={(url) => update("cover_image_url", url)}
+            folder="events"
+          />
           <div>
             <Label>Categoría</Label>
             <Input value={form.category} onChange={(e) => update("category", e.target.value)} />
