@@ -9,38 +9,229 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EventosIndexRouteImport } from './routes/eventos.index'
+import { Route as ArticulosIndexRouteImport } from './routes/articulos.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as EventosSlugRouteImport } from './routes/eventos.$slug'
+import { Route as ArticulosSlugRouteImport } from './routes/articulos.$slug'
+import { Route as ApiResetPasswordRouteImport } from './routes/api.reset-password'
+import { Route as AdminEventosIndexRouteImport } from './routes/admin.eventos.index'
+import { Route as AdminArticulosIndexRouteImport } from './routes/admin.articulos.index'
+import { Route as AdminEventosNuevoRouteImport } from './routes/admin.eventos.nuevo'
+import { Route as AdminEventosIdRouteImport } from './routes/admin.eventos.$id'
+import { Route as AdminArticulosNuevoRouteImport } from './routes/admin.articulos.nuevo'
+import { Route as AdminArticulosIdRouteImport } from './routes/admin.articulos.$id'
 
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventosIndexRoute = EventosIndexRouteImport.update({
+  id: '/eventos/',
+  path: '/eventos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArticulosIndexRoute = ArticulosIndexRouteImport.update({
+  id: '/articulos/',
+  path: '/articulos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const EventosSlugRoute = EventosSlugRouteImport.update({
+  id: '/eventos/$slug',
+  path: '/eventos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArticulosSlugRoute = ArticulosSlugRouteImport.update({
+  id: '/articulos/$slug',
+  path: '/articulos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiResetPasswordRoute = ApiResetPasswordRouteImport.update({
+  id: '/api/reset-password',
+  path: '/api/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminEventosIndexRoute = AdminEventosIndexRouteImport.update({
+  id: '/eventos/',
+  path: '/eventos/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminArticulosIndexRoute = AdminArticulosIndexRouteImport.update({
+  id: '/articulos/',
+  path: '/articulos/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEventosNuevoRoute = AdminEventosNuevoRouteImport.update({
+  id: '/eventos/nuevo',
+  path: '/eventos/nuevo',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEventosIdRoute = AdminEventosIdRouteImport.update({
+  id: '/eventos/$id',
+  path: '/eventos/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminArticulosNuevoRoute = AdminArticulosNuevoRouteImport.update({
+  id: '/articulos/nuevo',
+  path: '/articulos/nuevo',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminArticulosIdRoute = AdminArticulosIdRouteImport.update({
+  id: '/articulos/$id',
+  path: '/articulos/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/api/reset-password': typeof ApiResetPasswordRoute
+  '/articulos/$slug': typeof ArticulosSlugRoute
+  '/eventos/$slug': typeof EventosSlugRoute
+  '/admin/': typeof AdminIndexRoute
+  '/articulos/': typeof ArticulosIndexRoute
+  '/eventos/': typeof EventosIndexRoute
+  '/admin/articulos/$id': typeof AdminArticulosIdRoute
+  '/admin/articulos/nuevo': typeof AdminArticulosNuevoRoute
+  '/admin/eventos/$id': typeof AdminEventosIdRoute
+  '/admin/eventos/nuevo': typeof AdminEventosNuevoRoute
+  '/admin/articulos/': typeof AdminArticulosIndexRoute
+  '/admin/eventos/': typeof AdminEventosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/api/reset-password': typeof ApiResetPasswordRoute
+  '/articulos/$slug': typeof ArticulosSlugRoute
+  '/eventos/$slug': typeof EventosSlugRoute
+  '/admin': typeof AdminIndexRoute
+  '/articulos': typeof ArticulosIndexRoute
+  '/eventos': typeof EventosIndexRoute
+  '/admin/articulos/$id': typeof AdminArticulosIdRoute
+  '/admin/articulos/nuevo': typeof AdminArticulosNuevoRoute
+  '/admin/eventos/$id': typeof AdminEventosIdRoute
+  '/admin/eventos/nuevo': typeof AdminEventosNuevoRoute
+  '/admin/articulos': typeof AdminArticulosIndexRoute
+  '/admin/eventos': typeof AdminEventosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/api/reset-password': typeof ApiResetPasswordRoute
+  '/articulos/$slug': typeof ArticulosSlugRoute
+  '/eventos/$slug': typeof EventosSlugRoute
+  '/admin/': typeof AdminIndexRoute
+  '/articulos/': typeof ArticulosIndexRoute
+  '/eventos/': typeof EventosIndexRoute
+  '/admin/articulos/$id': typeof AdminArticulosIdRoute
+  '/admin/articulos/nuevo': typeof AdminArticulosNuevoRoute
+  '/admin/eventos/$id': typeof AdminEventosIdRoute
+  '/admin/eventos/nuevo': typeof AdminEventosNuevoRoute
+  '/admin/articulos/': typeof AdminArticulosIndexRoute
+  '/admin/eventos/': typeof AdminEventosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/api/reset-password'
+    | '/articulos/$slug'
+    | '/eventos/$slug'
+    | '/admin/'
+    | '/articulos/'
+    | '/eventos/'
+    | '/admin/articulos/$id'
+    | '/admin/articulos/nuevo'
+    | '/admin/eventos/$id'
+    | '/admin/eventos/nuevo'
+    | '/admin/articulos/'
+    | '/admin/eventos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/api/reset-password'
+    | '/articulos/$slug'
+    | '/eventos/$slug'
+    | '/admin'
+    | '/articulos'
+    | '/eventos'
+    | '/admin/articulos/$id'
+    | '/admin/articulos/nuevo'
+    | '/admin/eventos/$id'
+    | '/admin/eventos/nuevo'
+    | '/admin/articulos'
+    | '/admin/eventos'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/api/reset-password'
+    | '/articulos/$slug'
+    | '/eventos/$slug'
+    | '/admin/'
+    | '/articulos/'
+    | '/eventos/'
+    | '/admin/articulos/$id'
+    | '/admin/articulos/nuevo'
+    | '/admin/eventos/$id'
+    | '/admin/eventos/nuevo'
+    | '/admin/articulos/'
+    | '/admin/eventos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ApiResetPasswordRoute: typeof ApiResetPasswordRoute
+  ArticulosSlugRoute: typeof ArticulosSlugRoute
+  EventosSlugRoute: typeof EventosSlugRoute
+  ArticulosIndexRoute: typeof ArticulosIndexRoute
+  EventosIndexRoute: typeof EventosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,21 +239,125 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/eventos/': {
+      id: '/eventos/'
+      path: '/eventos'
+      fullPath: '/eventos/'
+      preLoaderRoute: typeof EventosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/articulos/': {
+      id: '/articulos/'
+      path: '/articulos'
+      fullPath: '/articulos/'
+      preLoaderRoute: typeof ArticulosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/eventos/$slug': {
+      id: '/eventos/$slug'
+      path: '/eventos/$slug'
+      fullPath: '/eventos/$slug'
+      preLoaderRoute: typeof EventosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/articulos/$slug': {
+      id: '/articulos/$slug'
+      path: '/articulos/$slug'
+      fullPath: '/articulos/$slug'
+      preLoaderRoute: typeof ArticulosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/reset-password': {
+      id: '/api/reset-password'
+      path: '/api/reset-password'
+      fullPath: '/api/reset-password'
+      preLoaderRoute: typeof ApiResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/eventos/': {
+      id: '/admin/eventos/'
+      path: '/eventos'
+      fullPath: '/admin/eventos/'
+      preLoaderRoute: typeof AdminEventosIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/articulos/': {
+      id: '/admin/articulos/'
+      path: '/articulos'
+      fullPath: '/admin/articulos/'
+      preLoaderRoute: typeof AdminArticulosIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/eventos/nuevo': {
+      id: '/admin/eventos/nuevo'
+      path: '/eventos/nuevo'
+      fullPath: '/admin/eventos/nuevo'
+      preLoaderRoute: typeof AdminEventosNuevoRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/eventos/$id': {
+      id: '/admin/eventos/$id'
+      path: '/eventos/$id'
+      fullPath: '/admin/eventos/$id'
+      preLoaderRoute: typeof AdminEventosIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/articulos/nuevo': {
+      id: '/admin/articulos/nuevo'
+      path: '/articulos/nuevo'
+      fullPath: '/admin/articulos/nuevo'
+      preLoaderRoute: typeof AdminArticulosNuevoRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/articulos/$id': {
+      id: '/admin/articulos/$id'
+      path: '/articulos/$id'
+      fullPath: '/admin/articulos/$id'
+      preLoaderRoute: typeof AdminArticulosIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminArticulosIdRoute: typeof AdminArticulosIdRoute
+  AdminArticulosNuevoRoute: typeof AdminArticulosNuevoRoute
+  AdminEventosIdRoute: typeof AdminEventosIdRoute
+  AdminEventosNuevoRoute: typeof AdminEventosNuevoRoute
+  AdminArticulosIndexRoute: typeof AdminArticulosIndexRoute
+  AdminEventosIndexRoute: typeof AdminEventosIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+  AdminArticulosIdRoute: AdminArticulosIdRoute,
+  AdminArticulosNuevoRoute: AdminArticulosNuevoRoute,
+  AdminEventosIdRoute: AdminEventosIdRoute,
+  AdminEventosNuevoRoute: AdminEventosNuevoRoute,
+  AdminArticulosIndexRoute: AdminArticulosIndexRoute,
+  AdminEventosIndexRoute: AdminEventosIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ApiResetPasswordRoute: ApiResetPasswordRoute,
+  ArticulosSlugRoute: ArticulosSlugRoute,
+  EventosSlugRoute: EventosSlugRoute,
+  ArticulosIndexRoute: ArticulosIndexRoute,
+  EventosIndexRoute: EventosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
