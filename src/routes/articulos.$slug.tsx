@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { ArticleLikeButton } from "@/components/ArticleLikeButton";
 
 interface ArticleFull {
   id: string;
@@ -16,6 +17,7 @@ interface ArticleFull {
   category: string | null;
   tags: string[] | null;
   published_at: string | null;
+  like_count: number;
 }
 
 async function loadArticle(slug: string): Promise<ArticleFull> {
@@ -124,8 +126,12 @@ function ArticlePage() {
             dangerouslySetInnerHTML={{ __html: html }}
           />
 
+          <div className="mt-10 flex items-center justify-center border-t border-border/60 pt-8">
+            <ArticleLikeButton articleId={article.id} initialCount={article.like_count ?? 0} />
+          </div>
+
           {article.tags && article.tags.length > 0 && (
-            <div className="mt-12 flex flex-wrap gap-2 border-t border-border/60 pt-8">
+            <div className="mt-8 flex flex-wrap gap-2">
               {article.tags.map((t) => (
                 <span key={t} className="rounded-full border border-border/60 bg-card/50 px-3 py-1 text-xs text-muted-foreground">
                   #{t}
